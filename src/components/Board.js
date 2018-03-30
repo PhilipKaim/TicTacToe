@@ -11,7 +11,7 @@ export default class Board extends Component {
                 <div className="board--4" id="4"></div>
                 <div className="board--5" id="5"></div>
                 <div className="board--6" id="6"></div>
-                <div className="board--7" id="7"></div>
+                <div className="board--7" id="7">O</div>
                 <div className="board--8" id="8"></div>
             </div>
         );
