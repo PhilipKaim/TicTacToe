@@ -1,0 +1,42 @@
+.winnerModal {
+    width: 100vw;
+    height: 100vh;
+    background: $overlay;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &__winner {
+        font-size: $large-font;
+        color: $off-black;
+    }
+
+    &__resetBoard {
+        background: #BBD2C5;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #292E49, #536976, #BBD2C5);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #292E49, #536976, #BBD2C5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        border: none;
+        border-radius: 4px;
+        padding: 10px 40px;
+        transition: all 0.5s;
+        font-size: $medium-font;
+
+        &:hover {
+            color: white;
+            cursor: pointer;
+            box-shadow: 4px 5px 4px 4px $shadow;
+        }
+
+        &:active {
+            transform: translateY(4px);
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
