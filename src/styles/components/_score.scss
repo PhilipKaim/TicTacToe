@@ -1,0 +1,41 @@
+.score {
+    width: 200px;
+    height: 150px;
+    background: $off-white;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    border: solid 2px rgba(0, 0, 0, 0.3);
+    position: relative;
+    top: 0;
+    left: 520px;
+}
+
+// container for each players scores
+.score--x, .score--o {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+// when it is a plyers turn their score will light up
+.score--x.active, .score--o.active {
+    background: $heighlight;
+}
+
+.score--x > *, .score--o > * {
+    font-family: $arial;
+    font-size: $medium-font;
+}
+
+// the text X: and the text O:
+.score__identifyer {
+    flex: 1;
+    text-align: center;
+}
+
+// the actual score of the player
+#score--x, #score--o {
+    flex: 4;
+    text-align: center;
+}
