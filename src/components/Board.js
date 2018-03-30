@@ -4,7 +4,7 @@ export default class Board extends Component {
     render() {
         return (
             <div className="board">
-                <div className="board--0" id="0"></div>
+                <div className="board--0" id="0">X</div>
                 <div className="board--1" id="1"></div>
                 <div className="board--2" id="2"></div>
                 <div className="board--3" id="3"></div>

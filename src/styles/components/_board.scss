@@ -5,6 +5,14 @@
     grid-template-columns: repeat(3, 1fr); 
     grid-template-rows: repeat(3, 1fr);
 
+    & > * {
+        display: flex;
+        font-family: $placers-font;
+        align-items: center;
+        justify-content: center;
+        font-size: $large-font;
+    }
+
     &--0 {
         width: 100%;
         height: 100%;
