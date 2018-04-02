@@ -6,11 +6,13 @@ import ModeModal from './ModeModal';
 import PlacerModal from './PlacerModal';
 
 export default class TicTacToeApp extends React.Component {
+  
   state = {
     turn: {
       computer: undefined,
       player: undefined,
     },
+    placer: undefined,
     mode: {
       onePlayer: undefined,
       twoPlayer: undefined,
@@ -20,22 +22,78 @@ export default class TicTacToeApp extends React.Component {
       playerO: 0
     },
     modals: {
-      mode: 'inactive',
-      placer: 'active',
-      winner: 'inactive'
+      mode: true,
+      placer: false,
+      winner: false
     },
-    board: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    winner: undefined,
+    board: ['', '', '', '', '', '', '', '', '']
   }
 
+  handlePlacerX = () => {
+    this.setState(() => ({
+      placer: 'X',
+      modals: {
+        placer: false
+      }
+    }));
+  };
+
+  handlePlacerO = () => {
+    this.setState(() => ({
+      placer: 'O',
+      modals: {
+        placer: false
+      }
+    }));
+  };
+
+  handleOnePlayer= () => {
+    this.setState(() => ({
+      mode: {
+        onePlayer: true,
+        twoPlayer: false
+      },
+      modals: {
+        mode: false,
+        placer: true
+      }
+    }));
+  }
+
+  handleTwoPlayer = () => {
+    this.setState(() => ({
+      mode: {
+        onePlayer: false,
+        twoPlayer: true
+      },
+      modals: {
+        mode: false,
+        placer: true
+      }
+    }));
+  }
+
+  handleXWins = () => {
+    this.setState(() => ({
+      winner: 'X'
+    }));
+  }
+
+  handleOWins = () => {
+    this.setState(() => ({
+      winner: 'O'
+    }));
+  }
 
   render() {
     return (
       <div>
-        <Score />
-        <Board />
-        {this.state.modals.mode === 'active' ? <ModeModal /> : ''}
-        {this.state.modals.placer === 'active' ? <PlacerModal /> : ''}
-        {this.state.modals.winner === 'active' ? <WinnerModal /> : ''}
+        <Score score={this.state.score} />
+        <Board board={this.state.board} />
+        {this.state.modals.mode === true ? <ModeModal mode={this.state.mode} handleOnePlayer={this.handleOnePlayer} handleTwoPlayer={this.handleTwoPlayer} /> : ''}
+        {this.state.modals.placer === true ? <PlacerModal placer={this.state.placer} handlePlacerX={this.handlePlacerX} handlePlacerO={this.handlePlacerO}/> : ''}
+        {this.state.modals.winner === true ? <WinnerModal winner={this.state.winner}/> : ''}
       </div>
     );
   }
