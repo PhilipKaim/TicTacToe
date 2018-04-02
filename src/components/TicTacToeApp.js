@@ -2,20 +2,11 @@ import React from 'react';
 import Board from './Board';
 import Score from './Score';
 import WinnerModal from './WinnerModal';
+import ModeModal from './ModeModal';
+import PlacerModal from './PlacerModal';
 
 export default class TicTacToeApp extends React.Component {
   state = {
-    spaces: {
-      space0: false,
-      space1: false,
-      space2: false,
-      space3: false,
-      space4: false,
-      space5: false,
-      space6: false,
-      space7: false,
-      space8: false,
-    },
     turn: {
       computer: undefined,
       player: undefined,
@@ -30,7 +21,7 @@ export default class TicTacToeApp extends React.Component {
     },
     modals: {
       mode: 'inactive',
-      placer: 'inactive',
+      placer: 'active',
       winner: 'inactive'
     },
     board: [0, 1, 2, 3, 4, 5, 6, 7, 8]
