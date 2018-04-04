@@ -39,7 +39,8 @@ export default class TicTacToeApp extends React.Component {
     }
 
     this.setState((prevState) => ({
-      board: this.state.board
+      board: this.state.board,
+      placer: this.state.placer === 'X' ? this.state.placer = 'O' : this.state.placer = 'X'
     }));
     
   }
