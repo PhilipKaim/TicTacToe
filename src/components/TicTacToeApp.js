@@ -12,7 +12,7 @@ export default class TicTacToeApp extends React.Component {
       computer: undefined,
       player: undefined,
     },
-    placer: 'X',
+    placer: undefined,
     mode: {
       onePlayer: undefined,
       twoPlayer: undefined,
@@ -22,12 +22,12 @@ export default class TicTacToeApp extends React.Component {
       playerO: 0
     },
     modals: {
-      mode: false,
+      mode: true,
       placer: false,
-      winner: true
+      winner: false
     },
     winner: undefined,
-    board: ['X', 'X', 'O', '', '', '', '', '', '']
+    board: ['', '', '', '', '', '', '', '', '']
   }
 
   handleMove = (place) => {
@@ -41,11 +41,24 @@ export default class TicTacToeApp extends React.Component {
       [2, 5, 8],
       [0, 4, 8],
       [2, 4, 6]
-    ]
+    ];
 
     // replaces the state board index with the state placer
     for (let i = 0; i < this.state.board.length; i++) {
-      if (i === place && this.state.board[i] === '') {
+
+      const onePlayerReplaceAndSwitch = i === place && this.state.board[i] === '' && this.state.mode.onePlayer === true && this.state.turn.player === true;
+      const twoPlayerReplaceAndSwitch = i === place && this.state.board[i] === '' && this.state.mode.twoPlayer === true;
+
+      if (onePlayerReplaceAndSwitch) {
+        this.state.board[i] = this.state.placer;
+
+        this.setState(() => ({
+          turn: {
+            player: this.state.turn.player === true ? false : true,
+            computer: this.state.turn.computer === true ? false : true
+          }
+        }));
+      } else if (twoPlayerReplaceAndSwitch) {
         this.state.board[i] = this.state.placer;
       }
     }
@@ -62,6 +75,10 @@ export default class TicTacToeApp extends React.Component {
       placer: 'X',
       modals: {
         placer: false
+      },
+      turn: {
+        player: true,
+        computer: false
       }
     }));
   };
@@ -71,6 +88,10 @@ export default class TicTacToeApp extends React.Component {
       placer: 'O',
       modals: {
         placer: false
+      },
+      turn: {
+        player: true,
+        computer: false
       }
     }));
   };
@@ -132,7 +153,22 @@ export default class TicTacToeApp extends React.Component {
       }
     }));
 
-    console.log(this.state.board);
+    //  NOT WORKING TO INCREMENT SCORES !!!!
+    // if (this.state.placer === 'X') {
+    //   this.setState((prevState) => ({
+    //     score: {
+    //       playerX: prevState + 1,
+    //     }
+    //   }));
+    // } else if (this.state.placeer === 'O') {
+    //   this.setState((prevState) => ({
+    //     score: {
+    //       playerO: prevState + 1
+    //     }
+    //   }));
+    // }
+
+    console.log(this.state.score.playerX);
     
   }
 
