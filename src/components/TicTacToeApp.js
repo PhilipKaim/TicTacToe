@@ -30,6 +30,20 @@ export default class TicTacToeApp extends React.Component {
     board: ['', '', '', '', '', '', '', '', '']
   }
 
+  handleMove = (place) => {
+
+    for (let i = 0; i < this.state.board.length; i++) {
+      if (i === place && this.state.board[i] === '') {
+        this.state.board[i] = this.state.placer;
+      }
+    }
+
+    this.setState((prevState) => ({
+      board: this.state.board
+    }));
+    
+  }
+
   handlePlacerX = () => {
     this.setState(() => ({
       placer: 'X',
@@ -90,7 +104,7 @@ export default class TicTacToeApp extends React.Component {
     return (
       <div>
         <Score score={this.state.score} />
-        <Board board={this.state.board} />
+        <Board board={this.state.board} handleMove={this.handleMove}/>
         {this.state.modals.mode === true ? <ModeModal mode={this.state.mode} handleOnePlayer={this.handleOnePlayer} handleTwoPlayer={this.handleTwoPlayer} /> : ''}
         {this.state.modals.placer === true ? <PlacerModal placer={this.state.placer} handlePlacerX={this.handlePlacerX} handlePlacerO={this.handlePlacerO}/> : ''}
         {this.state.modals.winner === true ? <WinnerModal winner={this.state.winner}/> : ''}
