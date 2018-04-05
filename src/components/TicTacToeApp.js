@@ -54,6 +54,54 @@ export default class TicTacToeApp extends React.Component {
       [2, 4, 6]
     ];
 
+    let spacesFilledX = 0;
+    let spacesFilledO = 0;
+
+    function checkForWinner(board) {
+
+      for (let i = 0; i < winningCombos.length; i++) {
+        for (let j = 0; j < winningCombos[i].length; j++) {
+          if (board[winningCombos[i][j]] === 'X') {
+            spacesFilledX++;
+          } else if (board[winningCombos[i][j]] === 'O') {
+            spacesFilledO++;
+          }
+
+          if (j === (winningCombos.length - 1)) {
+            spacesFilledO = 0;
+            spacesFilledX = 0;
+          }
+        }
+      }
+
+      if (spacesFilledX === 3) {
+        return 'X';
+      } else if (spacesFilledO === 3) {
+        return 'O';
+      }
+
+    }
+
+    if (checkForWinner(this.state.board) === 'X') {
+      console.log(spacesFilledX);
+      
+      this.setState(() => ({
+        winner: 'X',
+        modals: {
+          winner: true
+        }
+      }));
+    } else if (checkForWinner(this.state.board) === 'O') {
+      console.log(spacesFilledO);
+      
+      this.setState(() => ({
+        winner: 'O',
+        modals: {
+          winner: true
+        }
+      }));
+    }
+
     // replaces the state board index with the state placer
     for (let i = 0; i < this.state.board.length; i++) {
 
