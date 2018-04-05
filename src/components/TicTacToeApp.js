@@ -30,6 +30,17 @@ export default class TicTacToeApp extends React.Component {
     board: ['', '', '', '', '', '', '', '', '']
   }
 
+  componentDidUpdate() {
+    const score = document.querySelector('.score');
+    const board = document.querySelector('.board');
+    const allTrue = Object.keys(this.state.modals).every((k) => this.state.modals[k] === false);
+
+    if (allTrue === true) {
+      score.classList.add('active');
+      board.classList.add('active');
+    }
+  }
+
   handleMove = (place) => {
 
     const winningCombos = [

@@ -1,14 +1,20 @@
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+ } 
+
 .score {
     width: 200px;
     height: 150px;
     background: $off-white;
     border-radius: 4px;
-    display: flex;
+    display: none; // flex
     flex-direction: column;
     border: solid 2px rgba(0, 0, 0, 0.3);
     position: relative;
     top: 0;
     left: 520px;
+    animation-duration: 1.5s;
 }
 
 // container for each players scores
@@ -39,4 +45,9 @@
     flex: 4;
     text-align: center;
     color: lighten(blue, 15%);
+}
+
+.score.active {
+    display: flex;
+    animation-name: fadeIn;
 }
