@@ -42,6 +42,7 @@ export default class TicTacToeApp extends React.Component {
   }
 
   handleWinner = () => {
+
     const winningCombos = [
       [0, 1, 2],
       [3, 4, 5],
@@ -67,14 +68,22 @@ export default class TicTacToeApp extends React.Component {
     }
 
     if (checkForWinner(this.state.board) === 'X') {
-      this.setState(() => ({
+      this.setState((prevState) => ({
+        score: {
+          playerX: prevState.score.playerX + 1,
+          playerO: prevState.score.playerO
+        },
         winner: 'X',
         modals: {
           winner: true
         }
       }));
     } else if (checkForWinner(this.state.board) === 'O') {
-      this.setState(() => ({
+      this.setState((prevState) => ({
+        score: {
+          playerX: prevState.score.playerX,
+          playerO: prevState.score.playerO + 1
+        },
         winner: 'O',
         modals: {
           winner: true
@@ -122,6 +131,7 @@ export default class TicTacToeApp extends React.Component {
       placer: this.state.placer === 'X' ? this.state.placer = 'O' : this.state.placer = 'X'
     }));
 
+    // checks for a winner
     this.handleWinner();
     
   }
@@ -220,23 +230,8 @@ export default class TicTacToeApp extends React.Component {
         winner: false
       }
     }));
-
-    //  NOT WORKING TO INCREMENT SCORES !!!!
-    // if (this.state.placer === 'X') {
-    //   this.setState((prevState) => ({
-    //     score: {
-    //       playerX: prevState + 1,
-    //     }
-    //   }));
-    // } else if (this.state.placeer === 'O') {
-    //   this.setState((prevState) => ({
-    //     score: {
-    //       playerO: prevState + 1
-    //     }
-    //   }));
-    // }
-
-    console.log(this.state.score.playerX);
+    
+    console.log(this.state.score);
     
   }
 
