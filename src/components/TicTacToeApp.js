@@ -33,15 +33,18 @@ export default class TicTacToeApp extends React.Component {
   componentDidUpdate() {
     const score = document.querySelector('.score');
     const board = document.querySelector('.board');
-    const allTrue = Object.keys(this.state.modals).every((k) => this.state.modals[k] === false);
+    const allFalse = Object.keys(this.state.modals).every((k) => this.state.modals[k] === false);
 
-    if (allTrue === true) {
+    if (allFalse === true) {
       score.classList.add('active');
       board.classList.add('active');
     }
   }
 
   handleMove = (place) => {
+
+    const scoreX = document.querySelector('.score--x');
+    const scoreO = document.querySelector('.score--o');
 
     const winningCombos = [
       [0, 1, 2],
@@ -67,7 +70,7 @@ export default class TicTacToeApp extends React.Component {
             spacesFilledO++;
           }
 
-          if (j === (winningCombos.length - 1)) {
+          if (j === (winningCombos[i].length - 1)) {
             spacesFilledO = 0;
             spacesFilledX = 0;
           }
@@ -119,6 +122,15 @@ export default class TicTacToeApp extends React.Component {
         }));
       } else if (twoPlayerReplaceAndSwitch) {
         this.state.board[i] = this.state.placer;
+
+        // highlighted background for players turn
+        if (scoreO.classList.contains('active')) {
+          scoreO.classList.remove('active');
+          scoreX.classList.add('active');
+        } else if (scoreX.classList.contains('active')) {
+          scoreX.classList.remove('active');
+          scoreO.classList.add('active');
+        }
       }
     }
 
@@ -130,6 +142,9 @@ export default class TicTacToeApp extends React.Component {
   }
 
   handlePlacerX = () => {
+    const scoreX = document.querySelector('.score--x');
+    const scoreO = document.querySelector('.score--o');
+
     this.setState(() => ({
       placer: 'X',
       modals: {
@@ -140,9 +155,15 @@ export default class TicTacToeApp extends React.Component {
         computer: false
       }
     }));
+
+    // adds background highlight for active player X
+    scoreX.classList.add('active');
   };
 
   handlePlacerO = () => {
+    const scoreX = document.querySelector('.score--x');
+    const scoreO = document.querySelector('.score--o');
+
     this.setState(() => ({
       placer: 'O',
       modals: {
@@ -153,6 +174,9 @@ export default class TicTacToeApp extends React.Component {
         computer: false
       }
     }));
+
+    // adds background heighlight for active player O
+    scoreO.classList.add('active');
   };
 
   handleOnePlayer= () => {

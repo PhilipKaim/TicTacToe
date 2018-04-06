@@ -24,6 +24,14 @@
     align-items: center;
 }
 
+.score--x.active {
+    background: $heighlight
+}
+
+.score--o.active {
+    background: $heighlight
+}
+
 // when it is a plyers turn their score will light up
 .score--x.active, .score--o.active {
     background: $heighlight;
