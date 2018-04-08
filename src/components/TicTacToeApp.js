@@ -67,6 +67,19 @@ export default class TicTacToeApp extends React.Component {
       }
     }
 
+    // checks to see if all spaces are filled
+    // if filled no one wins
+    const tieGame = this.state.board.every(el => el !== '');
+
+    if (tieGame) {
+      this.setState(() => ({
+        winner: 'No One',
+        modals: {
+          winner: true
+        }
+      }));
+    }
+
     if (checkForWinner(this.state.board) === 'X') {
       this.setState((prevState) => ({
         score: {
