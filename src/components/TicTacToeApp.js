@@ -27,7 +27,17 @@ export default class TicTacToeApp extends React.Component {
       winner: false
     },
     winner: undefined,
-    board: ['', '', '', '', '', '', '', '', '']
+    board: ['', '', '', '', '', '', '', '', ''],
+    winningCombos: [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+    ]
   }
 
   componentDidUpdate() {
@@ -43,16 +53,7 @@ export default class TicTacToeApp extends React.Component {
 
   handleWinner = () => {
 
-    const winningCombos = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6]
-    ];
+    const winningCombos = this.state.winningCombos;
 
     function checkForWinner(board) {
 
@@ -146,7 +147,30 @@ export default class TicTacToeApp extends React.Component {
 
     // checks for a winner
     this.handleWinner();
+
+    console.log(this.handleComputersMove(this.state.board));
     
+  }
+
+  handleComputersMove = (board) => {
+    // only push to openSpace if the other two spaces that are filled are the same placer !!!!
+
+    const winningCombos = this.state.winningCombos;
+
+    const openSpaces = [];
+
+    for (let i = 0; i < winningCombos.length; i++) {
+      let filtered = winningCombos[i].filter(el => board[el] === '');
+      if (filtered.length === 1) {
+        openSpaces.push(filtered);
+      }
+    }
+
+    if (openSpaces.length > 0) {
+      return openSpaces;
+    } else {
+      return 'random';
+    }
   }
 
   handlePlacerX = () => {
@@ -243,8 +267,6 @@ export default class TicTacToeApp extends React.Component {
         winner: false
       }
     }));
-    
-    console.log(this.state.score);
     
   }
 
