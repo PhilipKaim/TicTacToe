@@ -118,8 +118,10 @@ export default class TicTacToeApp extends React.Component {
     // replaces the state board index with the state placer
     for (let i = 0; i < this.state.board.length; i++) {
 
-      const onePlayerReplaceAndSwitch = i === place && this.state.board[i] === '' && this.state.mode.onePlayer === true && this.state.turn.player === true;
-      const twoPlayerReplaceAndSwitch = i === place && this.state.board[i] === '' && this.state.mode.twoPlayer === true;
+      const { mode, board, turn } = this.state;
+
+      const onePlayerReplaceAndSwitch = i === place && board[i] === '' && mode.onePlayer === true && (mode.twoPlayer === false || undefined) && this.state.turn.player === true;
+      const twoPlayerReplaceAndSwitch = i === place && board[i] === '' && mode.twoPlayer === true && (mode.onePlayer === false || undefined);
 
       if (onePlayerReplaceAndSwitch) {
         this.state.board[i] = this.state.placer;
@@ -153,8 +155,6 @@ export default class TicTacToeApp extends React.Component {
 
     // checks for a winner
     this.handleWinner();
-
-    console.log(this.handleComputersMove(this.state.board));
     
   }
   
@@ -183,9 +183,6 @@ export default class TicTacToeApp extends React.Component {
             computer: false
           }
         }));
-
-        console.log(this.state.board);
-        
         
       }
     }
