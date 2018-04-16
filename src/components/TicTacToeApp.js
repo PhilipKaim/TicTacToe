@@ -153,9 +153,11 @@ export default class TicTacToeApp extends React.Component {
 
     // checks for a winner
     this.handleWinner();
+
+    console.log(this.handleComputersMove(this.state.board));
     
   }
-
+  
   handleComputersMove = () => {
 
     // loop through multidemensional array and compare to board array
