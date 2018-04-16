@@ -27,23 +27,8 @@ export default class TicTacToeApp extends React.Component {
       winner: false
     },
     winner: undefined,
-    board: ['', '', '', '', '', '', '', '', '']
-  }
-
-  componentDidUpdate() {
-    const score = document.querySelector('.score');
-    const board = document.querySelector('.board');
-    const allFalse = Object.keys(this.state.modals).every((k) => this.state.modals[k] === false);
-
-    if (allFalse === true) {
-      score.classList.add('active');
-      board.classList.add('active');
-    }
-  }
-
-  handleWinner = () => {
-
-    const winningCombos = [
+    board: ['', '', '', '', '', '', '', '', ''],
+    winningCombos: [
       [0, 1, 2],
       [3, 4, 5],
       [6, 7, 8],
@@ -52,10 +37,30 @@ export default class TicTacToeApp extends React.Component {
       [2, 5, 8],
       [0, 4, 8],
       [2, 4, 6]
-    ];
+    ]
+  }
+
+  componentDidUpdate() {
+    const score = document.querySelector('.score');
+    const board = document.querySelector('.board');
+
+    // checks to see if any modals are open
+    const allFalse = Object.keys(this.state.modals).every((k) => this.state.modals[k] === false);
+
+    // if modals are not open show the playing board and score board
+    if (allFalse === true) {
+      score.classList.add('active');
+      board.classList.add('active');
+    }
+  }
+
+  handleWinner = () => {
+
+    const winningCombos = this.state.winningCombos;
 
     function checkForWinner(board) {
 
+      // checks to see if the placer has three in a row and returns the placer to be used as the winner
       for (let i = 0; i < winningCombos.length; i++) {
         for (let j = 0; j < winningCombos[i].length; j++) {
           if (winningCombos[i].every(el => board[el] === 'X')) {
@@ -68,7 +73,7 @@ export default class TicTacToeApp extends React.Component {
     }
 
     // checks to see if all spaces are filled
-    // if filled no one wins
+    // if all are filled no one wins
     const tieGame = this.state.board.every(el => el !== '');
 
     if (tieGame) {
@@ -125,8 +130,10 @@ export default class TicTacToeApp extends React.Component {
             computer: this.state.turn.computer === true ? false : true
           }
         }));
+        this.handleComputersMove();
       } else if (twoPlayerReplaceAndSwitch) {
         this.state.board[i] = this.state.placer;
+        // this.handleComputersMove();
 
         // highlighted background for players turn
         if (scoreO.classList.contains('active')) {
@@ -147,6 +154,40 @@ export default class TicTacToeApp extends React.Component {
     // checks for a winner
     this.handleWinner();
     
+  }
+
+  handleComputersMove = () => {
+
+    // loop through multidemensional array and compare to board array
+    // if there is one empty space in on of the second level array fill it
+    // if not, randomly place 
+
+    const winningCombos = this.state.winningCombos;
+    const board = this.state.board;
+
+    for (let i = 0; i < winningCombos.length; i++) {
+      const copy = winningCombos[i].slice();
+      const filterSpacesAndO = copy.filter(el => board[el] === 'X');
+      const filterSpacesAndX = copy.filter(el => board[el] === 'O');
+      const filterPlacers = copy.filter(el => board[el] === '');
+      
+      if (filterPlacers.length === 1 && filterSpacesAndO.length === 2 || filterSpacesAndX.length === 2) {
+        board[filterPlacers[0]] = this.state.placer === 'X' ? 'O' : 'X';
+
+        this.setState(() => ({
+          board: board,
+          turn: {
+            player: true,
+            computer: false
+          }
+        }));
+
+        console.log(this.state.board);
+        
+        
+      }
+    }
+
   }
 
   handlePlacerX = () => {
@@ -243,8 +284,6 @@ export default class TicTacToeApp extends React.Component {
         winner: false
       }
     }));
-    
-    console.log(this.state.score);
     
   }
 
