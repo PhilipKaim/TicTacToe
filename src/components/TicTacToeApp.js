@@ -145,13 +145,13 @@ export default class TicTacToeApp extends React.Component {
           scoreX.classList.remove('active');
           scoreO.classList.add('active');
         }
+
+        this.setState((prevState) => ({
+          board: this.state.board,
+          placer: this.state.placer === 'X' ? this.state.placer = 'O' : this.state.placer = 'X'
+        }));
       }
     }
-
-    this.setState((prevState) => ({
-      board: this.state.board,
-      placer: this.state.placer === 'X' ? this.state.placer = 'O' : this.state.placer = 'X'
-    }));
 
     // checks for a winner
     this.handleWinner();
@@ -160,12 +160,25 @@ export default class TicTacToeApp extends React.Component {
   
   handleComputersMove = () => {
 
-    // loop through multidemensional array and compare to board array
-    // if there is one empty space in on of the second level array fill it
-    // if not, randomly place 
+    const { winningCombos, board, placer } = this.state;
+    let random = false;
+    let setTheState = false;
 
-    const winningCombos = this.state.winningCombos;
-    const board = this.state.board;
+    // if no counter move available, computer will place in a random open space
+    function randomPlacer() {
+      let indexes = [];
+      let i = -1;
+
+      while ((i = board.indexOf('', i + 1)) != -1){
+        indexes.push(i);
+      }
+
+      const randomPlace = indexes[Math.floor(Math.random() * indexes.length)];
+
+      board[randomPlace] = placer === 'X' ? 'O' : 'X';
+
+      setTheState = true;
+    }
 
     for (let i = 0; i < winningCombos.length; i++) {
       const copy = winningCombos[i].slice();
@@ -173,6 +186,7 @@ export default class TicTacToeApp extends React.Component {
       const filterSpacesAndX = copy.filter(el => board[el] === 'O');
       const filterPlacers = copy.filter(el => board[el] === '');
       
+      // counters players move
       if (filterPlacers.length === 1 && filterSpacesAndO.length === 2 || filterSpacesAndX.length === 2) {
         board[filterPlacers[0]] = this.state.placer === 'X' ? 'O' : 'X';
 
@@ -183,8 +197,28 @@ export default class TicTacToeApp extends React.Component {
             computer: false
           }
         }));
-        
+
+        random = false;
+
+        break;
+      } else {
+        random = true;
       }
+    }
+
+    if (random) {
+      randomPlacer();
+    }
+
+    // sets the turn back to the player after computers random move
+    if (setTheState) {
+      this.setState(() => ({
+        board: board,
+        turn: {
+          player: true,
+          computer: false
+        }
+      }));
     }
 
   }
